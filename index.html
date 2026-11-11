@@ -389,6 +389,65 @@ h3.sub { font: 600 1.1rem/1.3 var(--font-display); margin: 20px 0 10px; }
 .signs .ph-ja { font-size: 1.5rem; }
 .nums td:nth-child(2) { font: 600 1.15rem/1.2 var(--font-cjk); }
 
+/* search: full-screen panel over the page, results grouped by where they live */
+.search-btn {
+  margin-left: auto; display: inline-flex; align-items: center; gap: 6px;
+  font: 500 13px/1 var(--font-body); color: var(--muted); background: none;
+  border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; cursor: pointer;
+}
+.search-btn::before { content: ""; width: 13px; height: 13px; background: currentColor; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='6.6' cy='6.6' r='4.9' fill='none' stroke='black' stroke-width='2'/%3E%3Cpath d='M10.4 10.4 14.6 14.6' stroke='black' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center / contain; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='6.6' cy='6.6' r='4.9' fill='none' stroke='black' stroke-width='2'/%3E%3Cpath d='M10.4 10.4 14.6 14.6' stroke='black' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center / contain; }
+.search-btn + .lockbtn { margin-left: 0; }
+@media (min-width: 760px) { .search-btn { order: 3; } .lockbtn { order: 4; } }
+html.search-open, html.search-open body { overflow: hidden; }
+.search { position: fixed; inset: 0; z-index: 200; background: var(--paper); overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+.search[hidden] { display: none; }
+.search-in { max-width: 720px; margin: 0 auto; padding: 0 16px 48px; }
+.search-top { position: sticky; top: 0; z-index: 1; background: var(--paper); padding: 12px 0 10px; border-bottom: 1px solid var(--line); }
+.search-bar { display: flex; gap: 10px; align-items: center; }
+.search-field { position: relative; flex: 1; min-width: 0; color: var(--muted); }
+.search-field::before { content: ""; position: absolute; left: 13px; top: 50%; width: 16px; height: 16px; margin-top: -8px; background: currentColor; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='6.6' cy='6.6' r='4.9' fill='none' stroke='black' stroke-width='2'/%3E%3Cpath d='M10.4 10.4 14.6 14.6' stroke='black' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center / contain; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='6.6' cy='6.6' r='4.9' fill='none' stroke='black' stroke-width='2'/%3E%3Cpath d='M10.4 10.4 14.6 14.6' stroke='black' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center / contain; pointer-events: none; }
+#search-q {
+  width: 100%; font: 400 17px/1.3 var(--font-body); color: var(--ink); background: var(--surface);
+  border: 1px solid var(--line); border-radius: 10px; padding: 11px 12px 11px 38px; -webkit-appearance: none; appearance: none;
+}
+#search-q:focus { outline: 2px solid var(--accent); outline-offset: 0; }
+.search-close { flex: none; font: 500 15px/1 var(--font-body); color: var(--accent); background: none; border: 0; padding: 10px 2px; cursor: pointer; }
+.search-chips, .sr-exs { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.chip {
+  font: 500 13px/1 var(--font-body); padding: 7px 12px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--line); background: var(--surface); color: var(--muted);
+}
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.search-meta { margin: 12px 0 0; font-size: 13px; color: var(--muted); min-height: 1.2em; }
+.sr-hint { margin: 16px 0 0; color: var(--muted); font-size: 14px; }
+.sr-crumb {
+  margin: 16px 0 6px; font: 600 11px/1.4 var(--font-body); text-transform: uppercase; letter-spacing: .05em;
+  color: var(--c, var(--muted));
+}
+.sr-row { display: flex; gap: 6px; margin-bottom: 6px; }
+.sr-item {
+  flex: 1; min-width: 0; text-align: left; cursor: pointer; font: 400 15px/1.45 var(--font-body); color: var(--ink);
+  background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 9px 12px; overflow-wrap: anywhere;
+}
+.sr-item.head { font-weight: 600; }
+.sr-item mark { background: color-mix(in srgb, var(--accent) 24%, transparent); color: inherit; border-radius: 3px; padding: 0 1px; }
+.sr-pin {
+  flex: none; width: 42px; display: grid; place-items: center; color: var(--accent);
+  background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+}
+.sr-pin::before { content: ""; width: 12px; height: 16px; background: currentColor; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 16'%3E%3Cpath d='M6 0a6 6 0 0 0-6 6c0 4.5 6 10 6 10s6-5.5 6-10a6 6 0 0 0-6-6zm0 8.6A2.6 2.6 0 1 1 6 3.4a2.6 2.6 0 0 1 0 5.2z'/%3E%3C/svg%3E") no-repeat center / contain; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 16'%3E%3Cpath d='M6 0a6 6 0 0 0-6 6c0 4.5 6 10 6 10s6-5.5 6-10a6 6 0 0 0-6-6zm0 8.6A2.6 2.6 0 1 1 6 3.4a2.6 2.6 0 0 1 0 5.2z'/%3E%3C/svg%3E") no-repeat center / contain; }
+.sr-more {
+  width: 100%; margin-top: 8px; padding: 12px; cursor: pointer; font: 500 14px/1 var(--font-body);
+  color: var(--muted); background: none; border: 1px dashed var(--line); border-radius: 10px;
+}
+.view [id] { scroll-margin-top: 120px; }
+.search-hit { animation: search-hit 2.6s ease-out; }
+@keyframes search-hit {
+  0%, 35% { box-shadow: 0 0 0 3px var(--accent); background-color: color-mix(in srgb, var(--accent) 14%, var(--surface)); }
+  100% { box-shadow: 0 0 0 3px transparent; }
+}
+@media (prefers-reduced-motion: reduce) { .search-hit { animation: none; outline: 3px solid var(--accent); } }
+
 @media (max-width: 380px) {
   .kv { grid-template-columns: 1fr; gap: 2px; }
   .kv dd { margin-bottom: 8px; }
@@ -464,6 +523,21 @@ h3.sub { font: 600 1.1rem/1.3 var(--font-display); margin: 20px 0 10px; }
     var names = views.map(function (v) { return v.getAttribute("data-view"); });
     var tabs = $$(".tabs a");
 
+    // search targets: every line, event, card and day heading gets a stable id before routing,
+    // so a result (or a reload of its #link) can open the right tab and scroll straight to it
+    var UNIT_SEL = ".view h2.sec, .view .stop, .view .card, .view li, .view tr, .view dd, .view p, .view div.warn, .view .taxi";
+    var isUnit = function (el) {
+      if (el.closest(".route-legend, .today, .tabs")) return false;
+      var t = el.tagName;
+      if (t === "LI") return !el.querySelector("li");
+      if (t === "TR") return !!el.querySelector("td");
+      if (t === "P") return !el.closest("li") && !el.classList.contains("legend");
+      if (t === "DIV" && el.classList.contains("warn")) return !el.closest("li");
+      if (el.classList.contains("stop") || el.classList.contains("card")) return !!el.querySelector(":scope > h3");
+      return true;
+    };
+    $$(UNIT_SEL).filter(isUnit).forEach(function (el, i) { if (!el.id) el.id = "jp-" + (i + 1); });
+
     function route(scroll) {
       var n = location.hash.slice(1), target = null;
       if (names.indexOf(n) < 0) {
@@ -533,6 +607,247 @@ h3.sub { font: 600 1.1rem/1.3 var(--font-display); margin: 20px 0 10px; }
           synth.speak(u);
         });
         ph.after(b);
+      });
+    }
+
+
+    // ---------- search across every tab ----------
+    // Built from the decrypted page in memory only; nothing is stored, and it is gone after "Закрыть".
+    var SYN = {
+      "токио": ["tokyo"], "киото": ["kyoto"], "осака": ["osaka"], "хиросима": ["hiroshima"], "фудзи": ["fuji"], "фуджи": ["fuji"],
+      "хаконе": ["hakone"], "сибуя": ["shibuya"], "шибуя": ["shibuya"], "синдзюку": ["shinjuku"], "шинджуку": ["shinjuku"], "синджуку": ["shinjuku"],
+      "гиндза": ["ginza"], "гинза": ["ginza"], "асакуса": ["asakusa"], "уено": ["ueno"], "акасака": ["akasaka"], "харадзюку": ["harajuku"],
+      "хараджуку": ["harajuku"], "мейдзи": ["meiji"], "мейджи": ["meiji"], "нара": ["nara"], "миядзима": ["miyajima"], "миаджима": ["miyajima"],
+      "ицукусима": ["itsukushima"], "гион": ["gion"], "арасияма": ["arashiyama"], "арашияма": ["arashiyama"], "фусими": ["fushimi"], "фушими": ["fushimi"],
+      "инари": ["inari"], "кавагутико": ["kawaguchiko"], "кавагучико": ["kawaguchiko"], "яманака": ["yamanaka"], "седзи": ["shoji"], "седжи": ["shoji"],
+      "чурейто": ["chureito"], "тюрейто": ["chureito"], "нарита": ["narita"], "ханеда": ["haneda"], "шанхай": ["shanghai"], "пекин": ["beijing"],
+      "суика": ["suica"], "суйка": ["suica"], "синкансен": ["shinkansen"], "шинкансен": ["shinkansen"], "поттер": ["potter"], "гарри": ["harry"],
+      "тимлаб": ["teamlab"], "дотонбори": ["dotonbori"], "намба": ["namba"], "умеда": ["umeda"], "киемидзу": ["kiyomizu"], "одайба": ["odaiba"],
+      "скайтри": ["skytree"], "сенсодзи": ["senso-ji"], "угорь": ["угр", "унаги", "анаго"], "рамен": ["ramen", "ラーメン"],
+      "суши": ["sushi", "寿司", "鮨"], "онсен": ["onsen", "温泉"], "машина": ["nissan", "dayz"], "отель": ["hotel"], "самолет": ["рейс", "flight"]
+    };
+    var KB_RU = "йцукенгшщзхъфывапролджэячсмитьбюё", KB_EN = "qwertyuiop[]asdfghjkl;'zxcvbnm,.`";
+    var CJK = /[぀-ヿ㐀-鿿]/;
+    // one char in, one char out, so match positions line up with the original text
+    var nt = function (s) {
+      var out = "";
+      for (var i = 0; i < s.length; i++) {
+        var c = s.charAt(i), x = c.toLowerCase();
+        if (x.length !== 1) x = c;
+        if (x === "ё" || x === "э") x = "е";
+        else if (x > "\u007f" && x < "ɐ") x = x.normalize("NFD").charAt(0) || x;
+        out += x;
+      }
+      return out;
+    };
+    var esc = function (t) { return t.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
+    var SPACED = "div, p, li, dt, dd, h2, h3, td, th, br, figcaption, .d b, .f-no b, .f-date, .ph-ja, .ph-tr, .ph-ru";
+    var textOf = function (el, drop) {
+      var c = el.cloneNode(true);
+      $$(".copy, .say, .tag" + (drop ? ", " + drop : ""), c).forEach(function (x) { x.remove(); });
+      $$(SPACED, c).forEach(function (x) { x.after(" "); });
+      return c.textContent.replace(/\s+/g, " ").trim();
+    };
+    var index = null;
+    var buildIndex = function () {
+      var labels = {};
+      tabs.forEach(function (a) { labels[a.getAttribute("href").slice(1)] = a.textContent.trim(); });
+      var out = [], view = null, vname = "", vcolor = "", sec = "", sub = "";
+      $$(UNIT_SEL + ", .view h3.sub").forEach(function (el) {
+        var v = el.closest(".view");
+        if (v !== view) { view = v; vname = labels[v.getAttribute("data-view")] || ""; vcolor = v.style.getPropertyValue("--c").trim(); sec = ""; sub = ""; }
+        if (el.matches("h3.sub")) { sub = textOf(el); return; }
+        if (!isUnit(el)) return;
+        var text, head = false, crumb = [vname];
+        if (el.matches("h2.sec")) {
+          text = textOf(el); head = true;
+          var cut = text.lastIndexOf(" · ");
+          sec = cut > 0 && /\d/.test(text.slice(cut + 3)) ? text.slice(cut + 3) : text;
+          sub = "";
+        } else if (el.matches(".stop, .card")) {
+          var h = el.querySelector(":scope > h3"), sm = h.querySelector("small");
+          text = textOf(h, "small") + (sm ? " · " + sm.textContent.trim() : "");
+          head = true;
+          crumb.push(sec);
+        } else {
+          var dt = el.tagName === "DD" ? el.previousElementSibling : null;
+          text = (dt ? textOf(dt) + ": " : "") + textOf(el);
+          var box = el.closest(".stop") || el.closest(".card"), bh = box && box.querySelector(":scope > h3");
+          crumb.push(sec, bh ? textOf(bh, "small") : sub);
+        }
+        if (!text) return;
+        var norm = nt(text);
+        var where = crumb.filter(function (x, i, a) { return x && a.indexOf(x) === i; }).join(" · ");
+        var pin = head ? null : el.querySelector("a.map");
+        out.push({
+          id: el.id, text: text, norm: norm, head: head, where: where, color: vcolor,
+          // tags and the calendar date ("14.11") are searchable but not shown in the snippet
+          own: nt($$(".tag", el).map(function (t) { return t.textContent; }).join(" ") +
+            (el.hasAttribute("data-date") ? " " + el.getAttribute("data-date").slice(8) + "." + el.getAttribute("data-date").slice(5, 7) : "")), ctx: nt(where),
+          eat: !!el.querySelector(".tag.eat"), see: !!el.querySelector(".tag.see, .tag.must"),
+          book: !!el.querySelector(".code") || /брон|билет|куплен/.test(norm),
+          map: pin ? pin.getAttribute("href") : ""
+        });
+      });
+      return out;
+    };
+    var swapLayout = function (t) {
+      var o = "", hit = false;
+      for (var i = 0; i < t.length; i++) {
+        var ch = t.charAt(i), a = KB_RU.indexOf(ch), b = a < 0 ? KB_EN.indexOf(ch) : -1;
+        if (a >= 0) { o += KB_EN.charAt(a); hit = true; } else if (b >= 0) { o += KB_RU.charAt(b); hit = true; } else o += ch;
+      }
+      return hit ? o : "";
+    };
+    // each word becomes a list of alternatives: itself, a shorter stem, synonyms, the same keys in the other keyboard layout
+    var parse = function (q) {
+      var toks = [];
+      q.toLowerCase().split(/\s+/).forEach(function (raw) {
+        if (!raw || (raw.length < 2 && !CJK.test(raw))) return;
+        var t = nt(raw), alts = [t];
+        var add = function (x) { if (x && alts.indexOf(x) < 0) alts.push(x); };
+        if (/[а-я]/.test(t)) { if (t.length >= 5) add(t.slice(0, -1)); if (t.length >= 7) add(t.slice(0, -2)); }
+        Object.keys(SYN).forEach(function (k) { if (k === t || (t.length >= 3 && k.indexOf(t) === 0)) SYN[k].forEach(add); });
+        if (raw.length >= 4) { var sw = swapLayout(raw); if (sw) add(nt(sw)); }
+        toks.push(alts);
+      });
+      return toks;
+    };
+    var snippet = function (u, toks) {
+      var t = u.text, n = u.norm, ranges = [], MAX = 190;
+      toks.forEach(function (alts) {
+        alts.forEach(function (a) {
+          for (var p = n.indexOf(a); p >= 0; p = n.indexOf(a, p + a.length)) ranges.push([p, p + a.length]);
+        });
+      });
+      ranges.sort(function (x, y) { return x[0] - y[0]; });
+      var start = 0, end = t.length;
+      if (t.length > MAX) {
+        start = Math.max(0, (ranges.length ? ranges[0][0] : 0) - 60);
+        if (start > 0) { var sp = t.indexOf(" ", start); if (sp > 0 && sp - start < 20) start = sp + 1; }
+        end = Math.min(t.length, start + MAX);
+        if (end < t.length) { var sp2 = t.lastIndexOf(" ", end); if (sp2 > start + MAX - 25) end = sp2; }
+      }
+      var html = start > 0 ? "…" : "", pos = start;
+      ranges.forEach(function (r) {
+        var a = Math.max(r[0], pos), b = Math.min(r[1], end);
+        if (b <= a) return;
+        html += esc(t.slice(pos, a)) + "<mark>" + esc(t.slice(a, b)) + "</mark>";
+        pos = b;
+      });
+      return html + esc(t.slice(pos, end)) + (end < t.length ? "…" : "");
+    };
+
+    var sb = document.createElement("button");
+    sb.type = "button"; sb.className = "search-btn"; sb.textContent = "Поиск"; sb.setAttribute("aria-label", "Поиск по плану");
+    var tbar = $(".topbar-in");
+    if (tbar) tbar.insertBefore(sb, $("#lock-btn"));
+    var ov = document.createElement("div");
+    ov.className = "search"; ov.id = "search"; ov.hidden = true;
+    ov.setAttribute("role", "dialog"); ov.setAttribute("aria-modal", "true"); ov.setAttribute("aria-label", "Поиск по плану");
+    ov.innerHTML = '<div class="search-in"><div class="search-top"><div class="search-bar">' +
+      '<label class="search-field"><input type="search" id="search-q" placeholder="Место, блюдо, дата, бронь" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" aria-label="Что ищем"></label>' +
+      '<button type="button" class="search-close">Отмена</button></div>' +
+      '<div class="search-chips" role="group" aria-label="Фильтр">' +
+      '<button type="button" class="chip" data-f="" aria-pressed="true">Все</button>' +
+      '<button type="button" class="chip" data-f="eat" aria-pressed="false">Еда</button>' +
+      '<button type="button" class="chip" data-f="see" aria-pressed="false">Смотреть</button>' +
+      '<button type="button" class="chip" data-f="book" aria-pressed="false">Брони</button></div></div>' +
+      '<p class="search-meta" aria-live="polite"></p><div class="search-res"></div></div>';
+    $("#app").appendChild(ov);
+    var input = $("#search-q", ov), meta = $(".search-meta", ov), res = $(".search-res", ov);
+    var HINT = '<p class="sr-hint">Ищет по всем вкладкам: места, блюда, даты, брони, фразы. Например:</p><div class="sr-exs">' +
+      ["рамен", "Suica", "бронь", "14.11", "онсэн", "счёт"].map(function (x) { return '<button type="button" class="chip sr-ex">' + x + "</button>"; }).join("") + "</div>";
+    var filter = "", shown = 60, toks = [], frame = 0;
+
+    var run = function () {
+      toks = parse(input.value);
+      if (!toks.length) { meta.textContent = ""; res.innerHTML = HINT; return; }
+      var hits = index.filter(function (u) {
+        if (filter && !u[filter]) return false;
+        var own = !!filter; // an active chip already matched the line itself, so a city name alone is enough
+        for (var k = 0; k < toks.length; k++) {
+          var found = false;
+          for (var a = 0; a < toks[k].length; a++) {
+            var x = toks[k][a];
+            if (u.norm.indexOf(x) >= 0 || u.own.indexOf(x) >= 0) { found = own = true; break; }
+            if (u.ctx.indexOf(x) >= 0) found = true;
+          }
+          if (!found) return false;
+        }
+        return own;
+      });
+      meta.textContent = hits.length ? hits.length + " " + plural(hits.length, "совпадение", "совпадения", "совпадений") : "Ничего не нашлось";
+      var html = "", last = null;
+      hits.slice(0, shown).forEach(function (u) {
+        if (u.where !== last) { html += '<div class="sr-crumb" style="--c:' + (u.color || "var(--muted)") + '">' + esc(u.where) + "</div>"; last = u.where; }
+        html += '<div class="sr-row"><button type="button" class="sr-item' + (u.head ? " head" : "") + '" data-id="' + u.id + '">' + snippet(u, toks) + "</button>" +
+          (u.map ? '<a class="sr-pin" href="' + esc(u.map) + '" target="_blank" rel="noopener" aria-label="Открыть в картах"></a>' : "") + "</div>";
+      });
+      if (hits.length > shown) html += '<button type="button" class="sr-more">Показать ещё ' + (hits.length - shown) + "</button>";
+      res.innerHTML = html;
+    };
+    var openSearch = function () {
+      if (!index) index = buildIndex();
+      ov.hidden = false;
+      document.documentElement.classList.add("search-open");
+      if (!(history.state && history.state.jpSearch)) history.pushState({ jpSearch: 1 }, "", location.href);
+      input.focus(); input.select();
+      run();
+    };
+    var closeSearch = function (navigating) {
+      if (ov.hidden) return;
+      ov.hidden = true;
+      document.documentElement.classList.remove("search-open");
+      if (!navigating && history.state && history.state.jpSearch) history.back();
+    };
+    // jump to a result: the search entry in history is replaced, so "back" returns to where the search started
+    var go = function (id) {
+      var el = document.getElementById(id);
+      closeSearch(true);
+      if (!el) return;
+      if (location.hash === "#" + id) { history.replaceState(null, "", "#" + id); route(false); }
+      else location.replace("#" + id);
+      setTimeout(function () { el.classList.remove("search-hit"); void el.offsetWidth; el.classList.add("search-hit"); }, 60);
+      setTimeout(function () { el.classList.remove("search-hit"); }, 2900);
+    };
+
+    sb.addEventListener("click", openSearch);
+    $(".search-close", ov).addEventListener("click", function () { closeSearch(false); });
+    input.addEventListener("input", function () {
+      shown = 60;
+      clearTimeout(frame);
+      frame = setTimeout(run, 60);
+    });
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") { var first = $(".sr-item", res); if (first) go(first.getAttribute("data-id")); }
+    });
+    $$(".chip[data-f]", ov).forEach(function (c) {
+      c.addEventListener("click", function () {
+        filter = c.getAttribute("data-f");
+        $$(".chip[data-f]", ov).forEach(function (x) { x.setAttribute("aria-pressed", x === c ? "true" : "false"); });
+        shown = 60; run();
+      });
+    });
+    res.addEventListener("click", function (e) {
+      var item = e.target.closest(".sr-item"), more = e.target.closest(".sr-more"), ex = e.target.closest(".sr-ex");
+      if (item) go(item.getAttribute("data-id"));
+      else if (more) { shown += 60; run(); }
+      else if (ex) { input.value = ex.textContent; run(); input.focus(); }
+    });
+    // system back closes the panel; "/" opens it and Escape closes it (wired once, finds the current panel each time)
+    window.onpopstate = function () {
+      var o = $("#search");
+      if (o && !o.hidden) { o.hidden = true; document.documentElement.classList.remove("search-open"); }
+    };
+    if (!window.__jpSearchKeys) {
+      window.__jpSearchKeys = true;
+      document.addEventListener("keydown", function (e) {
+        var o = $("#search");
+        if (!o) return;
+        if (e.key === "Escape" && !o.hidden) { $(".search-close", o).click(); return; }
+        var tag = (e.target && e.target.tagName) || "";
+        if (e.key === "/" && o.hidden && tag !== "INPUT" && tag !== "TEXTAREA") { e.preventDefault(); $(".search-btn").click(); }
       });
     }
 
